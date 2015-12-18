@@ -243,7 +243,7 @@ for(eachkey in 1:length(keys)){
   } else
   
   {
-    gbif.goc = gbif.goc %>% tbl_df()
+    gbif.goc = gbif.goc %>% tbl_df
   this.class = class(gbif.goc)
     
   gbif.goc$source_data = "gbif"
@@ -255,7 +255,7 @@ for(eachkey in 1:length(keys)){
   
   
   gbif.goc = gbif.goc %>% 
-    select(name, decimalLongitude, decimalLatitude,source_data) %>% 
+    dplyr::select(name, decimalLongitude, decimalLatitude,source_data) %>% 
     setnames(c("name","long","lat","source_data"))
   
   gbif.goc2 =  gbif.goc[complete.cases(gbif.goc),]#eliminate rows with NA
@@ -380,7 +380,7 @@ this.source = "ecoengine"
   write.csv(ee.data.frame, file=paste(this.source,"_",this.species,"_biodiver_full.csv",sep=""))
   
   ee.data.goc = ee.data.frame %>% 
-    select(scientific_name, longitude, latitude) %>% 
+    dplyr::select(scientific_name, longitude, latitude) %>% 
     setnames(c("name","long","lat"))
   
   ee.data.goc$source_data = "ecoengine"
@@ -483,7 +483,7 @@ for(eachfile in 1:length(csv.files)){
   print(paste("Analyzing file ", eachfile, "of ",length(csv.files)))
   Biom  = fread(csv.files[eachfile],header=T, sep=",",select=c(1:11)) %>%
     tbl_df %>% 
-    select(sname, longitude, latitude) %>% #subset needed variables
+    dplyr::select(sname, longitude, latitude) %>% #subset needed variables
     setnames(c("name","long","lat"))
   
   Biom$source_data = "obis" # set source
