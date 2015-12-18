@@ -1065,7 +1065,7 @@ rm(list=ls(all=TRUE))
 
 datafiles="E:/Archivos/1Archivos/Articulos/En preparacion/Climate_change_species_distribution/Data/Ocurrencia_especies"
 datapath="E:/Archivos/1Archivos/Articulos/En preparacion/Climate_change_species_distribution/Analysis" #put path
-speciespath="E:/Archivos/1Archivos/Articulos/En preparacion/Climate_change_species_distribution/Analysis/Species_files" #put path
+speciespath="E:/Archivos/1Archivos/Articulos/En preparacion/Climate_change_species_distribution/Analysis/Maxent_models" #put path
 shapepath = "E:/Archivos/SIG/Proyectos/ArcGis/Datos ordenados/Shapes y layers/Archivos_articulos/Species_records"
 
 setwd(shapepath)
@@ -1149,13 +1149,14 @@ for(eachspecies in 1:length(species.goc)){
   
   biodiversity.sp = biodiversity.2 %>% 
     filter(name %in% spp.list) %>% 
-    mutate(name=valid.sp)
+    mutate(name=valid.sp) %>% dplyr::select(name,lat,long) %>% 
+    data.frame
   
   genus = valid.sp %>% strsplit(" ") %>% unlist %>% .[1]
   species = valid.sp %>% strsplit(" ") %>% unlist %>% .[2]
   
   setwd(speciespath)
-  write.csv(biodiversity.sp,file=paste(genus,species,"data",".csv",sep="_"))
+  write.csv(biodiversity.sp,file=paste(genus,species,"data.csv",sep="_"),row.names=FALSE)
   
 }
 
